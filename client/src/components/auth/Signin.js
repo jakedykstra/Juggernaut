@@ -1,19 +1,19 @@
 // inside auth is where we place all the components that have to do with authenticaion
-import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import React, { Component } from "react";
+import { reduxForm, Field } from "redux-form";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
 
 class Signin extends Component {
-  onSubmit = formProps => {
+  onSubmit(formProps) {
     this.props.signin(formProps, () => {
-      this.props.history.push('/feature');
+      this.props.history.push("/home");
     });
-  };
+  }
 
-  render() {
-    // we pull handleSubmit which is a prop we get from reduxform. We need this for submitting, it is naturally called. 
+  handleClick() {
+    // we pull handleSubmit which is a prop we get from reduxform. We need this for submitting, it is naturally called.
     const { handleSubmit } = this.props;
     // fieldsets wrap a group of different fields
     return (
@@ -43,6 +43,10 @@ class Signin extends Component {
       </form>
     );
   }
+
+  render() {
+    return <button onClick={this.handleClick}>Facebook</button>;
+  }
 }
 
 function mapStateToProps(state) {
@@ -50,6 +54,9 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  connect(mapStateToProps, actions),
-  reduxForm({ form: 'signin' })
+  connect(
+    mapStateToProps,
+    actions
+  ),
+  reduxForm({ form: "signin" })
 )(Signin);
