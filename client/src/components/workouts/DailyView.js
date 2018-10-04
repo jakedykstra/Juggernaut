@@ -10,13 +10,12 @@ class DailyView extends Component {
   constructor(props) {
     super(props);
 
-    this.state= {
+    this.state = {
       workoutDay: null
-    }
+    };
 
     this.nextDay = this.nextDay.bind(this);
     this.previousDay = this.previousDay.bind(this);
-
   }
 
   userDay = this.props.workoutDay;
@@ -30,54 +29,45 @@ class DailyView extends Component {
   }
 
   showWorkouts = () => {
-    if(this.state.workoutDay == null || this.props.workoutDay == this.state.workoutDay) {
-      this.today();
-    } else if (this.state.workoutDay > this.props.workoutDay) {
-      let weight = this.props.program.programDay(this.state.workoutDay, 200);
-      console.log(weight);
-      return weight.map(set => {
-        let key = set[set]; 
-        console.log(set);
-        return <NewForm key={set.set} set={set} />;
-      }); 
-    } else if (this.state.workoutDay < this.props.workoutDay) {
-      let weight = this.props.program.programDay(this.state.workoutDay, 200);
-      console.log(weight);
-      return weight.map(set => {
-        let key = set.set;
-        console.log(set);
-        return (
-          <form>
-            <label htmlFor="Set">Set {set.set}</label>
-            <label htmlFor="Weight">Weight</label>
-            <input type="text-field" placeholder={set.weight} />
-            <label htmlFor="Reps">Reps</label>
-            <input type="text-field" placeholder={set.reps} />
-          </form>
-        );
-      });
-    }
-  }
-
-  today(){
-    let weight = this.props.program.programDay(2, 200);
-    return weight.map(set => {
-      let key = set.set;
-      console.log(set);
-      return (
-        <form>
-          <label htmlFor="Set">Set {set.set}</label>
-          <label htmlFor="Weight">Weight</label>
-          <input type="text-field" placeholder={set.weight} />
-          <label htmlFor="Reps">Reps</label>
-          <input type="text-field" placeholder={set.reps} />
-        </form>
+    if (
+      this.state.workoutDay === null ||
+      this.props.workoutDay === this.state.workoutDay
+    ) {
+      let workoutListed = this.props.program.programDay(
+        this.props.workoutDay,
+        200
+        // will be this.props.maxes
       );
+      return this.formLayout(workoutListed);
+    } else if (this.state.workoutDay > this.props.workoutDay) {
+      let workoutListed = this.props.program.programDay(
+        this.state.workoutDay,
+        200
+      );
+      return this.formLayout(workoutListed);
+    } else if (this.state.workoutDay < this.props.workoutDay) {
+      let workoutListed = this.props.program.programDay(
+        this.state.workoutDay,
+        200
+      );
+      return this.formLayout(workoutListed);
+    }
+  };
+
+  formLayout = workoutListed => {
+    return workoutListed.map(set => {
+      let key = set[set];
+      console.log(set);
+      return <NewForm key={set.set} set={set} />;
     });
   };
 
-  nextDay = () => {
-    this.userDay++;
+  updateDay = calc => {
+    if (calc === "minus") {
+      this.userDay--;
+    } else if (calc === "plus") {
+      this.userDay++;
+    }
     this.setState({
       workoutDay: this.userDay
     });
@@ -85,28 +75,13 @@ class DailyView extends Component {
     console.log(this.props);
     return this.userDay;
   };
-
-  previousDay = () => {
-    this.userDay--;
-    this.setState({
-      workoutDay: this.userDay
-    })
-    console.log(this.state);
-    console.log(this.props);
-    return this.userDay;
-  };
-
-  componentWillMount() {
-    let currentDay = this.props.workoutDay;
-    return currentDay;
-  }
 
   render() {
     return (
       <div className="Daily">
         {this.showWorkouts()}
-        <button onClick={this.previousDay}>last workout</button>
-        <button onClick={this.nextDay}>next workout </button>
+        <button onClick={() => this.updateDay("minus")}>last workout</button>
+        <button onClick={() => this.updateDay("plus")}>next workout </button>
       </div>
     );
   }

@@ -12,19 +12,21 @@ class Home extends Component {
     super(props);
   }
 
-  // componentDidMount() {
-  //   if (this.props.auth.isLoggedIn === false || !this.props.auth.isLoggedIn) {
-  //     console.log("logged wrong");
-  //     this.props.history.push("/");
-  //   }
-  // }
+  componentDidMount() {
+    // if (!localStorage.getItem('token'))
+    if (this.props.auth.isLoggedIn === false || !this.props.auth.isLoggedIn) {
+      console.log("logged wrong");
+      this.props.history.push("/");
+    }
+  }
 
-  // componentDidUpdate() {
-  //   if (this.props.auth.isLoggedIn === false || !this.props.auth.isLoggedIn) {
-  //     console.log("logged wrong");
-  //     this.props.history.push("/");
-  //   }
-  // }
+  componentDidUpdate() {
+    if (this.props.auth.isLoggedIn === false || !this.props.auth.isLoggedIn) {
+      console.log("logged wrong");
+      this.props.history.push("/");
+    }
+  }
+
   render() {
     return (
       <div>

@@ -18,7 +18,7 @@ class Facebook extends Component {
   }
 
   render() {
-    return <button onClick={this.handleClick}>Signin</button>;
+    return <button onClick={this.handleClick}>Facebook</button>;
   }
 }
 

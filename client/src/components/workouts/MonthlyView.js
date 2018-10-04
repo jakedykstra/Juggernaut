@@ -1,26 +1,35 @@
-import React, { Component } from 'react';
-import { Grid } from '@material-ui/core';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Grid } from "@material-ui/core";
+import { connect } from "react-redux";
+import * as actions from "../../actions";
+import Calendar from "react-calendar";
+// IF I WANT TO DO MY OWN CALENDER STYLING import Calendar from 'react-calendar/dist/entry.nostyle';
 
-export default class DailyView extends Component {
-  
-  
-    render() {
-      return (
-        <div className='Month'>
-        Month
-        </div>
-          // High level overview based on day 
-          // total volume
-          // strength increases by lift
-        
-      );
+class MonthlyView extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: new Date()
+    };
   }
 
-};
+  onChange = date => this.setState({ date });
 
-// function mapStateToProps({ DailyView }) {
-//     return { DailyView };
-//   }
+  render() {
+    return (
+      <div>
+        <div className="Month">Month</div>;
+        <Calendar onChange={this.onChange} value={this.state.date} />
+      </div>
+    );
+  }
+}
 
-// export default connect(mapStateToProps, actions)(DailyView);
+function mapStateToProps({ state }) {
+  return { state };
+}
+
+export default connect(
+  mapStateToProps,
+  actions
+)(MonthlyView);
