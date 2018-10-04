@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { reduxForm, Field } from "redux-form";
 // compose helps with cleanup of the application, it allows us to write out multiple higher-order components with a much simpler syntax, rather than manually chaining them together with a bunch of parens
 import { compose } from "redux";
@@ -17,6 +18,7 @@ class Signup extends Component {
     console.log(formProps);
     // we call the signup action creator that is available inside of our component due to the connect below
     // we set a callback here so that after signing up they will be taken to the feature page
+    console.log(this.props);
     this.props.signup(formProps, () => {
       this.props.history.push("/home");
     });
@@ -77,5 +79,6 @@ export default compose(
     mapStateToProps,
     actions
   ),
-  reduxForm({ form: "signup" })
+  reduxForm({ form: "signup" }),
+  withRouter
 )(Signup);

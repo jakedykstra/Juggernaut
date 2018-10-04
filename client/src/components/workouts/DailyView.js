@@ -10,12 +10,16 @@ class DailyView extends Component {
   constructor(props) {
     super(props);
 
+    this.state= {
+      workoutDay: null
+    }
+
     this.nextDay = this.nextDay.bind(this);
     this.previousDay = this.previousDay.bind(this);
+
   }
 
-  todaysWorkout = this.props.workoutDay;
-  workoutDay = 2;
+  userDay = this.props.workoutDay;
 
   startDailyComponent() {
     return (
@@ -25,18 +29,19 @@ class DailyView extends Component {
     );
   }
 
-  showWorkouts() {
-    if(this.props.workoutDay == this.workoutDay) {
+  showWorkouts = () => {
+    if(this.state.workoutDay == null || this.props.workoutDay == this.state.workoutDay) {
       this.today();
-    } else if (this.workoutDay > this.props.workoutDay) {
-      let weight = this.props.program.programDay(this.workoutDay, 200);
+    } else if (this.state.workoutDay > this.props.workoutDay) {
+      let weight = this.props.program.programDay(this.state.workoutDay, 200);
       console.log(weight);
       return weight.map(set => {
+        let key = set[set]; 
         console.log(set);
-        return <NewForm let key={set.set} set={set} />;
+        return <NewForm key={set.set} set={set} />;
       }); 
-    } else if (this.workoutDay < this.props.workoutDay) {
-      let weight = this.props.program.programDay(this.workoutDay, 200);
+    } else if (this.state.workoutDay < this.props.workoutDay) {
+      let weight = this.props.program.programDay(this.state.workoutDay, 200);
       console.log(weight);
       return weight.map(set => {
         let key = set.set;
@@ -71,15 +76,30 @@ class DailyView extends Component {
     });
   };
 
-  nextDay() {
-    this.workoutDay++;
-    console.log(this.workoutDay);
+  nextDay = () => {
+    this.userDay++;
+    this.setState({
+      workoutDay: this.userDay
+    });
+    console.log(this.state);
     console.log(this.props);
+    return this.userDay;
   };
 
-  previousDay() {
-    this.workoutDay--;
+  previousDay = () => {
+    this.userDay--;
+    this.setState({
+      workoutDay: this.userDay
+    })
+    console.log(this.state);
+    console.log(this.props);
+    return this.userDay;
   };
+
+  componentWillMount() {
+    let currentDay = this.props.workoutDay;
+    return currentDay;
+  }
 
   render() {
     return (

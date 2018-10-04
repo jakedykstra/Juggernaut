@@ -15,7 +15,17 @@ require('./services/passport');
 
 mongoose.Promise = global.Promise;
 // we pass the address of the mongo instance we crated on mlab.com. Each project on there will give us a uri. We place it in config to hide from people
-mongoose.connect(keys.mongoURI);
+mongoose.connect("mongodb://localhost/jugg", {
+  useMongoClient: true
+})
+
+// if(keys.mongoURI){
+//   mongoose.connect(keys.mongoURI)  
+// } else {
+  // mongoose.connect(keys.mongoLocal)
+// }
+
+
 
 const app = express();
 // all app.use are middlewares that get applied to our app before the route handlers, you can also place them elsewhere if you don't want all these middlewares being used between all routes handlers

@@ -138,12 +138,12 @@ export default function(){
   },
 
   intensWkCalc(wave, trnMax) {
-        let weight, trueWeight;
+      let weight, trueWeight;
       this.workout= [];
       switch (wave) {
           case 10:
               for (let i = 0; i < 6; i++) {
-                  if ( 0 <= i <= 2) {
+                  if ( (0 <= i) && (i <= 2) ) {
                       if (i == 0) {
                           weight = trnMax * 0.55
                       } else {
@@ -152,14 +152,14 @@ export default function(){
 
                       trueWeight = this.increments(weight);
                       this.workout.push(this.setCalc(i, trueWeight, 5))
-                  }
+                  } else {
                   weight = trnMax * 0.675
                   trueWeight = this.increments(weight);
                   this.workout.push(this.setCalc(i, trueWeight, 10))
                   console.log(this.workout);  
+                  }
               }
               return this.workout;
-              break;
           case 8:
               for (let i = 1; i < 6; i++) {
                   if (i == 1 || i == 2) {

@@ -39,7 +39,7 @@ module.exports = app => {
     '/auth/google/callback',
     passport.authenticate('google'), Authentication.signinSocial,
     (req, res) => {
-      res.redirect('/home');
+      res.send(req.user);
     }
   );
 
@@ -56,7 +56,7 @@ module.exports = app => {
   passport.authenticate('facebook', { failureRedirect: '/' }), Authentication.signinSocial,
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.send(req.user);
   });
 
   app.get('/api/logout', (req, res) => {
@@ -64,6 +64,11 @@ module.exports = app => {
     req.logout();
     res.redirect('/');
   });
+  
+  //TODO: change this later!!!
+  app.get('/home', (req, res) => {
+    res.redirect('/');
+  })
 
   app.get('/profile', 
   function(req, res){
