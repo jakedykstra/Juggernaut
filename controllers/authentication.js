@@ -19,7 +19,8 @@ function tokenForUser(user) {
 exports.signin = function(req, res, next) {
   // User has already had their email and password auth'd
   // We just need to give them a token
-  res.send({ token: tokenForUser(req.user) });
+  res.send({ token: tokenForUser(req.user),
+  user: req.user });
 }
 
 exports.signup = function(req, res, next) {
@@ -55,11 +56,12 @@ exports.signup = function(req, res, next) {
       // we send back an identifying piece of information, the token, that the user can store and use in the future for authentication requests
       // when users + our secret string are added, we get a json web token(JWT). Then when they use that token, we will use our secret string to decrpypt the token their userId and authenticate
       // secret string is paramount to security, we can never let this accidently get out
-      res.json({ token: tokenForUser(user) });
+      res.json({ token: tokenForUser(user),
+      user: req.user });
     });
   });
 }
 
 exports.signinSocial = function(req, res, next) {
-  res.send({ token: tokenForUser(req.user) });
+  res.send({ token: tokenForUser(req.user), user: req.user });
 }

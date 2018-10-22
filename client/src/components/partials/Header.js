@@ -41,7 +41,6 @@ class Header extends Component {
 
   handleSignOut() {
     console.log("signout clicked");
-    // still need to figure out how to remove tokens
     this.props.signout();
   }
 
@@ -57,14 +56,14 @@ class Header extends Component {
     const { anchorEl } = this.state;
     console.log(this.props);
     console.log("logging auth");
-    if (this.props.auth.isLoggedIn === false) {
+    if (!localStorage.getItem("token")) {
       return (
         <div className="header">
-          <AppBar position="static">
+          <AppBar className="app_bar" position="static">
             <Toolbar>
-              <IconButton color="inherit" aria-label="Menu" />
+              <IconButton aria-label="Menu" />
               <Typography variant="headline">Juggernaut</Typography>
-              <Button color="inherit">Login</Button>
+              <Button>Login</Button>
             </Toolbar>
           </AppBar>
         </div>
@@ -72,9 +71,9 @@ class Header extends Component {
     } else {
       return (
         <div className="header">
-          <AppBar position="static">
+          <AppBar className="app_bar" position="static">
             <Toolbar>
-              <IconButton color="inherit" aria-label="Menu">
+              <IconButton aria-label="Menu">
                 <MenuIcon />
                 <Menu
                   id="simple-menu"
@@ -89,10 +88,8 @@ class Header extends Component {
                 </Menu>
               </IconButton>
               <Typography variant="headline">Juggernaut</Typography>
-              <Button color="inherit" onClick={this.handleSignOut}>
-                Logout
-              </Button>
-              <Button color="inherit">{this.props.auth.name}</Button>
+              <Button onClick={this.handleSignOut}>Logout</Button>
+              <Button>{this.props.user.name}</Button>
             </Toolbar>
           </AppBar>
         </div>
@@ -101,8 +98,8 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth };
+function mapStateToProps({ auth, user }) {
+  return { auth, user };
 }
 
 export default connect(

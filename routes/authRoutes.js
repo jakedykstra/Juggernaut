@@ -72,7 +72,15 @@ module.exports = app => {
 
   app.get('/profile', 
   function(req, res){
-    res.render('profile', { user: req.user });
+    //  TODO: all of this
+    //db.User.find({})
+    // .populate("UserMaxes Workout")
+    // .then(function(dbUser) {
+    //   // If any Libraries are found, send them to the client with any associated Books
+    //   res.json(dbUser);
+    // })
+    res.send( req.user );
+
   });
 
 

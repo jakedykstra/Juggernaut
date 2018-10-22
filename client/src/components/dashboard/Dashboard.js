@@ -1,6 +1,7 @@
 import React from "react";
 import Graph from "./Graph";
 import Maxes from "./Maxes";
+import MaxCalc from "./MaxCalc";
 import Stats from "./Stats";
 import Grid from "@material-ui/core/Grid";
 
@@ -9,12 +10,13 @@ const Dashboard = props => {
   return (
     <div>
       <Grid container>
-        <Grid item>
+        <Grid item xs={6}>
           <Graph />
         </Grid>
-        <Grid item>
+        <Grid item xs={6}>
           <Maxes />
           <Stats />
+          <MaxCalc />
         </Grid>
       </Grid>
     </div>

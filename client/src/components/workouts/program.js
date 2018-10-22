@@ -41,52 +41,52 @@ class Program extends Component {
     };
   }
 
-  programDay(day) {
+  programDay(day, userMax) {
     if (day == 1 || day % 4 == 1) {
       if (0 < day < 5) {
-        this.accumWkCalc(10, this.props.userMaxes);
+        this.accumWkCalc(10, userMax);
       } else if (15 < day < 20) {
-        this.accumWkCalc(8, this.props.userMaxes);
+        this.accumWkCalc(8, userMax);
       } else if (31 < day < 36) {
-        this.accumWkCalc(5, this.props.userMaxes);
+        this.accumWkCalc(5, userMax);
       } else if (47 < day < 52) {
-        this.accumWkCalc(3, this.props.userMaxes);
+        this.accumWkCalc(3, userMax);
       } else {
         console.log("error");
       }
     } else if (day == 2 || day % 4 == 2) {
       if (4 < day < 9) {
-        this.intensWkCalc(10, this.props.userMaxes);
+        this.intensWkCalc(10, userMax);
       } else if (19 < day < 24) {
-        this.intensWkCalc(8, this.props.userMaxes);
+        this.intensWkCalc(8, userMax);
       } else if (35 < day < 40) {
-        this.intensWkCalc(5, this.props.userMaxes);
+        this.intensWkCalc(5, userMax);
       } else if (51 < day < 56) {
-        this.intensWkCalc(3, this.props.userMaxes);
+        this.intensWkCalc(3, userMax);
       } else {
         console.log("error");
       }
     } else if (day == 3 || day % 4 == 3) {
       if (8 < day < 13) {
-        this.realizeWkCalc(10, this.props.userMaxes);
+        this.realizeWkCalc(10, userMax);
       } else if (23 < day < 29) {
-        this.realizeWkCalc(8, this.props.userMaxes);
+        this.realizeWkCalc(8, userMax);
       } else if (39 < day < 44) {
-        this.realizeWkCalc(5, this.props.userMaxes);
+        this.realizeWkCalc(5, userMax);
       } else if (55 < day < 60) {
-        this.realizeWkCalc(3, this.props.userMaxes);
+        this.realizeWkCalc(3, userMax);
       } else {
         console.log("error");
       }
     } else if (day == 4 || day % 4 == 0) {
       if (12 < day < 17) {
-        this.deloadWkCalc(10, this.props.userMaxes);
+        this.deloadWkCalc(10, userMax);
       } else if (28 < day < 33) {
-        this.deloadWkCalc(8, this.props.userMaxes);
+        this.deloadWkCalc(8, userMax);
       } else if (44 < day < 49) {
-        this.deloadWkCalc(5, this.props.userMaxes);
+        this.deloadWkCalc(5, userMax);
       } else if (60 < day < 65) {
-        this.deloadWkCalc(3, this.props.userMaxes);
+        this.deloadWkCalc(3, userMax);
       } else {
         console.log("error");
       }
@@ -301,11 +301,11 @@ class Program extends Component {
   }
 }
 
-function mapStateToProps({ userMaxes }) {
-  return { userMaxes };
-}
+// function mapStateToProps({ userMaxes }) {
+//   return { userMaxes };
+// }
 
-export default connect(
-  mapStateToProps,
-  null
-)(Program);
+// export default connect(
+//   mapStateToProps,
+//   null
+// )(Program);

@@ -9,6 +9,7 @@ import WeeklyView from "../workouts/WeeklyView";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import ColorTheme from "../../utils/materialui";
 
+// container for tabs, Children and dir props get passed in
 function TabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
@@ -17,7 +18,18 @@ function TabContainer({ children, dir }) {
   );
 }
 
-export default class FullWidthTabs extends React.Component {
+TabContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+  dir: PropTypes.string.isRequired
+};
+
+const styles = theme => ({
+  root: {
+    backgroundColor: theme.palette.background.paper
+  }
+});
+
+class FullWidthTabs extends React.Component {
   state = {
     value: 0
   };
@@ -31,41 +43,55 @@ export default class FullWidthTabs extends React.Component {
   };
 
   render() {
+    const { classes, theme } = this.props;
+
     return (
-      <MuiThemeProvider theme={ColorTheme}>
-        <Tabs
-          className="tab_bar"
-          value={this.state.value}
-          onChange={this.handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          fullWidth
-        >
-          <Tab label="Dashboard" />
-          <Tab label="Weekly" />
-          <Tab label="Daily" />
-        </Tabs>
+      <div className={classes.root}>
+        <MuiThemeProvider theme={ColorTheme}>
+          <AppBar className="app_bar" position="static" color="default">
+            <Tabs
+              className="tab_bar"
+              value={this.state.value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              fullWidth
+            >
+              <Tab label="Dashboard" />
+              <Tab label="Weekly" />
+              <Tab label="Daily" />
+            </Tabs>
+          </AppBar>
+        </MuiThemeProvider>
         <SwipeableViews
+          axis={theme.direction === "rtl" ? "x-reverse" : "x"}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer>
+          <TabContainer dir={theme.direction}>
             <Grid item xs={12}>
               <Dashboard />
             </Grid>
           </TabContainer>
-          <TabContainer>
+          <TabContainer dir={theme.direction}>
             <Grid item xs={12}>
               <WeeklyView />
             </Grid>
           </TabContainer>
-          <TabContainer>
+          <TabContainer dir={theme.direction}>
             <Grid item xs={12}>
               <DailyView />
             </Grid>
           </TabContainer>
         </SwipeableViews>
-      </MuiThemeProvider>
+      </div>
     );
   }
 }
+
+FullWidthTabs.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
+};
+
+export default withStyles(styles, { withTheme: true })(FullWidthTabs);

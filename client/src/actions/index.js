@@ -4,9 +4,11 @@ import {
   POST_WORKOUT,
   FETCH_PROGRAM,
   FETCH_WORKOUTDAY,
+  FETCH_WORKOUT_DATA,
   SOCIAL_USER,
   FETCH_USER,
-  AUTH_ERROR
+  AUTH_ERROR,
+  FETCH_USER_LIFT_DATA
 } from "./types";
 // auth -------------------------------------------------------------
 
@@ -16,7 +18,7 @@ export const signup = (formProps, callback) => async dispatch => {
 
     dispatch({
       type: AUTH_USER,
-      payload: response.data.token
+      payload: { authenticated: response.data.token }
     });
     localStorage.setItem("token", response.data.token);
     callback();
@@ -31,8 +33,12 @@ export const signup = (formProps, callback) => async dispatch => {
 export const signin = (formProps, callback) => async dispatch => {
   try {
     const response = await axios.post("/signin", formProps);
-
-    dispatch({ type: AUTH_USER, payload: response.data.token });
+    console.log(response);
+    dispatch({
+      type: AUTH_USER,
+      payload: { authenticated: response.data.token }
+    });
+    dispatch({ type: FETCH_USER, payload: response.data.user });
     localStorage.setItem("token", response.data.token);
     callback();
   } catch (e) {
@@ -44,7 +50,7 @@ export const signInGoogle = callback => async dispatch => {
   try {
     const response = await axios.get("/auth/google");
     dispatch({ type: AUTH_USER, payload: response.data.token });
-    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("token", { authenticated: response.data.token });
     callback();
   } catch (e) {
     dispatch({ type: SOCIAL_USER, payload: "Invalid login credentials" });
@@ -55,7 +61,10 @@ export const signInFacebook = callback => async dispatch => {
   try {
     const response = await axios.get("/auth/facebook");
 
-    dispatch({ type: AUTH_USER, payload: response.data.token });
+    dispatch({
+      type: AUTH_USER,
+      payload: { authenticated: response.data.token }
+    });
     localStorage.setItem("token", response.data.token);
     callback();
   } catch (e) {
@@ -63,14 +72,18 @@ export const signInFacebook = callback => async dispatch => {
   }
 };
 
-export const authUser = () => async dispatch => {
+export const authUser = cb => async dispatch => {
   const res = await axios.get("/profile");
-  dispatch({ type: FETCH_USER, payload: res.data });
+  dispatch({ type: FETCH_USER, payload: res });
+  console.log(res);
+  console.log("profile response");
+  // if (res.data)
+  // dispatch({ type: FETCH_USER_LIFT_DATA, payload: response.data.user });
+  cb();
 };
 
 export const signout = () => {
   localStorage.removeItem("token");
-
   return {
     type: AUTH_USER,
     payload: {
@@ -104,6 +117,8 @@ export const fetchDay = () => async dispatch => {
   dispatch({ type: FETCH_WORKOUTDAY, payload: day });
 };
 
-// export const fetchDay = () => {
-//   dispatch({type: FETCH_WORKOUTDAY, payload: 1})
-// }
+export const fetchWorkoutdata = () => async dispatch => {
+  const res = await axios.get("/api/workouts");
+  const workouts = res.data;
+  dispatch({ type: FETCH_WORKOUT_DATA, payload: workouts });
+};

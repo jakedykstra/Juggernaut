@@ -3,11 +3,7 @@ import { SOCIAL_USER, SIGN_OUT, AUTH_USER } from "../../actions/types";
 // state is null before user is authenticated
 export default function(
   state = {
-    isLoggedIn: false,
-    userId: "",
-    email: "",
-    name: "",
-    picture: ""
+    authenticated: localStorage.getItem("token")
   },
   action
 ) {

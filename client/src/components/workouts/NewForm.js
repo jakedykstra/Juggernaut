@@ -1,20 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 export default class NewForm extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
   }
 
-    render(){
-      return(
-      <form>
-          <label htmlFor="Set">Set {this.props.set.set}</label>
-          <label htmlFor="Weight">Weight</label>
-          <input type="text-field" placeholder={this.props.set.weight}></input>
-          <label htmlFor="Reps">Reps</label>
-          <input type="text-field" placeholder={this.props.set.reps}></input>
-      </form>
+  render() {
+    if (!this.props.set.set) {
+      return null;
+    } else {
+      return (
+        <tr>
+          <td data-label="Set">{this.props.set.set}</td>
+          <td>
+            <input
+              className="input-field"
+              type="text-field"
+              placeholder={this.props.set.weight}
+            />{" "}
+          </td>
+          <td>
+            {" "}
+            <input
+              className="input-field"
+              type="text-field"
+              placeholder={this.props.set.reps}
+            />{" "}
+          </td>
+        </tr>
       );
+    }
+  }
 }
-
-};

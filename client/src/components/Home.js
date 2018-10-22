@@ -6,40 +6,54 @@ import Dashboard from "./dashboard/Dashboard";
 import Tabs from "./partials/Tabs";
 import * as actions from "../actions";
 import { connect } from "react-redux";
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  }
+});
 class Home extends Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    // if (!localStorage.getItem('token'))
-    if (this.props.auth.isLoggedIn === false || !this.props.auth.isLoggedIn) {
-      console.log("logged wrong");
+    if (!localStorage.getItem("token")) {
       this.props.history.push("/");
+      // localStorage.removeItem("token");
     }
+    // if (this.props.user.isLoggedIn === false || !this.props.user.isLoggedIn) {
   }
 
   componentDidUpdate() {
-    if (this.props.auth.isLoggedIn === false || !this.props.auth.isLoggedIn) {
-      console.log("logged wrong");
+    if (!localStorage.getItem("token")) {
+      // if (this.props.user.isLoggedIn === false || !this.props.user.isLoggedIn) {
       this.props.history.push("/");
     }
   }
 
   render() {
+    console.log("Home props on render -------------");
     return (
       <div>
-        {console.log(this.props)}
-        <Tabs />
-        <Footer />
+        <Grid item xs={12}>
+          <Tabs />
+        </Grid>
       </div>
     );
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth };
+function mapStateToProps({ auth, user, classes }) {
+  return { auth, user, classes };
 }
 
 export default connect(
